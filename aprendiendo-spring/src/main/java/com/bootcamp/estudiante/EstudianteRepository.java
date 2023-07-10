@@ -9,4 +9,5 @@ public interface EstudianteRepository extends JpaRepository<Estudiante, Long> {
 
     boolean existsByEmailAndIdIsNot(String email, Long id);
 
+
 }
