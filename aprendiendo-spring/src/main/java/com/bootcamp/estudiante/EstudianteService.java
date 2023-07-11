@@ -25,11 +25,11 @@ public class EstudianteService {
         return estudiantes;
     }
 
-    public void createEstudiante(Long estudianteId, Estudiante estudiante){
+    public void createEstudiante(Estudiante estudiante){
 
         emailValido(estudiante);
 
-        emailRegistrado(estudianteId, estudiante);
+        nuevoEmailRegistrado(estudiante);
 
         estudianteRepository.save(estudiante);
     }
@@ -75,7 +75,7 @@ public class EstudianteService {
         return estudianteRepositoryMentiras.getEstudianteUnico(estudianteId);
     }
 
-    boolean checkValideszEmail(String email){
+    private boolean checkValideszEmail(String email){
         return Pattern.compile(
                 "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
                 Pattern.CASE_INSENSITIVE
@@ -96,4 +96,10 @@ public class EstudianteService {
         }
     }
 
+    private void nuevoEmailRegistrado(Estudiante estudiante) {
+        boolean emailExiste = estudianteRepository.existsByEmail(estudiante.getEmail());
+        if (emailExiste) {
+            throw new IllegalArgumentException("email " + estudiante.getEmail() + " ya esta registrado");
+        }
+    }
 }

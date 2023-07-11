@@ -23,8 +23,8 @@ public class EstudianteController{
     }
 
     @PostMapping
-    public void createEstudiante(@RequestBody Long estudianteId, Estudiante estudiante){
-        estudianteService.createEstudiante(estudianteId, estudiante);
+    public void createEstudiante(@RequestBody Estudiante estudiante){
+        estudianteService.createEstudiante(estudiante);
     }
 
     @DeleteMapping("{id}")
