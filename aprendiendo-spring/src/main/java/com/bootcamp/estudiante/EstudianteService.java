@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 @Service
@@ -70,9 +71,14 @@ public class EstudianteService {
     }
 
     @GetMapping("{id}")
-    public Estudiante getEstudianteUnico(Long estudianteId){
+    public Optional<Estudiante> getEstudianteUnico(Long estudianteId){
+        boolean estudianteConId = estudianteRepository.existsById(estudianteId);
 
-        return estudianteRepositoryMentiras.getEstudianteUnico(estudianteId);
+        if (!estudianteConId){
+            throw new NoSuchElementException("No existe ningun estudiante con el id: " + estudianteId);
+        }
+
+        return estudianteRepository.findById(estudianteId);
     }
 
     private boolean checkValideszEmail(String email){

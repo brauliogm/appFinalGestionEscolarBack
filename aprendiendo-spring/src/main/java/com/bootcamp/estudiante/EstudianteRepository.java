@@ -1,8 +1,9 @@
 package com.bootcamp.estudiante;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 public interface EstudianteRepository extends JpaRepository<Estudiante, Long> {
@@ -12,6 +13,6 @@ public interface EstudianteRepository extends JpaRepository<Estudiante, Long> {
     boolean existsByEmail(String email);
 
 
-
-
+    @Override
+    Optional<Estudiante> findById(Long aLong);
 }

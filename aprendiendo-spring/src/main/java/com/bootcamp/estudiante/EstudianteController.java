@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 // @Deprecated //Con esta anotacion ya no se hace uso de esta version, se hace obsoleta
 @RestController
@@ -38,7 +39,7 @@ public class EstudianteController{
     }
 
     @GetMapping("{id}")
-    public Estudiante getEstudianteUnico(@PathVariable("id") Long estudianteId){
+    public Optional<Estudiante> getEstudianteUnico(@PathVariable("id") Long estudianteId){
         return estudianteService.getEstudianteUnico(estudianteId);
     }
 }
