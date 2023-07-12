@@ -37,17 +37,17 @@ public class EstudianteService {
 
     public void deleteEstudiante(Long estudianteId){
         // check si id existe, si no se imprime el warning
-        boolean existe = getAllEstudiantes().stream().anyMatch(e -> e.getId().equals(estudianteId));
+        boolean existe = estudianteRepository.existsById(estudianteId);
+                //getAllEstudiantes().stream().anyMatch(e -> e.getId().equals(estudianteId));
 
         if (!existe){
-            System.out.println("WARNING: ese Id no existe");
-            return;
+            throw new NoSuchElementException("WARNING: el estudiante con el Id " + estudianteId + " no existe");
         }
 
         estudianteRepository.deleteById(estudianteId);
     }
 
-    public void actualizarEstudiante(Long estudianteId, Estudiante estudiante){
+    public Estudiante actualizarEstudiante(Long estudianteId, Estudiante estudiante){
         // Check si estudiante con ese id existe, si no, salta el error
         Estudiante estudianteExistente = estudianteRepository.findById(estudianteId)
                 .orElseThrow(() -> new NoSuchElementException("Estudiante con ese id no existe, id: " + estudianteId));
@@ -67,18 +67,21 @@ public class EstudianteService {
         estudianteExistente.setFechaNacimiento(estudiante.getFechaNacimiento());
         estudianteExistente.setEmail(estudiante.getEmail());
 
-        estudianteRepository.save(estudianteExistente);
+        return estudianteRepository.save(estudianteExistente);
     }
 
     @GetMapping("{id}")
-    public Optional<Estudiante> getEstudianteUnico(Long estudianteId){
-        boolean estudianteConId = estudianteRepository.existsById(estudianteId);
+    public Estudiante getEstudianteUnico(Long estudianteId){
+        Optional<Estudiante> estudianteOpcional = estudianteRepository.findById(estudianteId);
 
-        if (!estudianteConId){
+        if (estudianteOpcional.isEmpty()){
             throw new NoSuchElementException("No existe ningun estudiante con el id: " + estudianteId);
         }
 
-        return estudianteRepository.findById(estudianteId);
+        return estudianteOpcional.get();
+
+//        return  estudianteRepository.findById(estudianteId)
+//                .orElseThrow(() -> new NoSuchElementException("No existe ningun estudiante con el id: " + estudianteId));
     }
 
     private boolean checkValideszEmail(String email){

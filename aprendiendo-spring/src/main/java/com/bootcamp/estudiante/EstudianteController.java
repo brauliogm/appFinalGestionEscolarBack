@@ -34,12 +34,12 @@ public class EstudianteController{
     }
 
     @PutMapping("{id}")
-    public void actualizarEstudiante(@PathVariable("id") Long estudianteId,@RequestBody Estudiante estudiante){
-        estudianteService.actualizarEstudiante(estudianteId, estudiante);
+    public Estudiante actualizarEstudiante(@PathVariable("id") Long estudianteId,@RequestBody Estudiante estudiante){
+        return estudianteService.actualizarEstudiante(estudianteId, estudiante);
     }
 
     @GetMapping("{id}")
-    public Optional<Estudiante> getEstudianteUnico(@PathVariable("id") Long estudianteId){
+    public Estudiante getEstudianteUnico(@PathVariable("id") Long estudianteId){
         return estudianteService.getEstudianteUnico(estudianteId);
     }
 }
