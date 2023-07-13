@@ -24,6 +24,11 @@ public class EstudianteService {
         return estudiantes;
     }
 
+    public List<Estudiante> getEstudiantesByPrimerNombreOrPrimerApellido(String primerNombre, String primerApellido){
+        List<Estudiante> estudiantes = estudianteRepository.findEstudianteByPrimerNombreOrPrimerApellido(primerNombre, primerApellido);
+        return estudiantes;
+    }
+
     public void createEstudiante(Estudiante estudiante){
 
         emailValido(estudiante);

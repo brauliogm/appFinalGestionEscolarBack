@@ -14,9 +14,13 @@ public interface EstudianteRepository extends JpaRepository<Estudiante, Long> {
 
     boolean existsByEmail(String email);
 
-    @Override
-    Optional<Estudiante> findById(Long aLong);
+//    @Override
+//    Optional<Estudiante> findById(Long aLong);
 
     List<Estudiante> findEstudianteByPrimerNombreOrPrimerApellido(String primerNombre, String primerApellido);
+
+    List<Estudiante> findByPrimerNombreOrPrimerApellido(String primerNombre, String primerApellido);
+
+
 
 }
