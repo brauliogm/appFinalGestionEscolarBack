@@ -2,6 +2,7 @@ package com.bootcamp.estudiante;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+@Transactional
 @Service
 public class EstudianteService {
 
@@ -19,11 +21,13 @@ public class EstudianteService {
         this.estudianteRepository = estudianteRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Estudiante> getAllEstudiantes(){
         List<Estudiante> estudiantes = estudianteRepository.findAll();
         return estudiantes;
     }
 
+    @Transactional(readOnly = true)
     public List<Estudiante> getEstudiantesByPrimerNombreOrPrimerApellido(String primerNombre, String primerApellido){
         List<Estudiante> estudiantes = estudianteRepository.findEstudianteByPrimerNombreOrPrimerApellido(primerNombre, primerApellido);
         return estudiantes;
@@ -55,6 +59,13 @@ public class EstudianteService {
         Estudiante estudianteExistente = estudianteRepository.findById(estudianteId)
                 .orElseThrow(() -> new NoSuchElementException("Estudiante con ese id no existe, id: " + estudianteId));
 
+        //Actualizar Estudiante
+        estudianteExistente.setPrimerNombre(estudiante.getPrimerNombre());
+        estudianteExistente.setSegundoNombre(estudiante.getSegundoNombre());
+        estudianteExistente.setPrimerApellido(estudiante.getPrimerApellido());
+        estudianteExistente.setSegundoApellido(estudiante.getSegundoApellido());
+        estudianteExistente.setFechaNacimiento(estudiante.getFechaNacimiento());
+
         //check si el email en valido
 
         emailValido(estudiante);
@@ -62,17 +73,13 @@ public class EstudianteService {
         //check si el email que se quiere actualizar ya existe
         emailRegistrado(estudianteId, estudiante);
 
-        //Actualizar Estudiante
-        estudianteExistente.setPrimerNombre(estudiante.getPrimerNombre());
-        estudianteExistente.setSegundoNombre(estudiante.getSegundoNombre());
-        estudianteExistente.setPrimerApellido(estudiante.getPrimerApellido());
-        estudianteExistente.setSegundoApellido(estudiante.getSegundoApellido());
-        estudianteExistente.setFechaNacimiento(estudiante.getFechaNacimiento());
+        //Actualizar email de estudiante
         estudianteExistente.setEmail(estudiante.getEmail());
 
-        return estudianteRepository.save(estudianteExistente);
+        return estudianteExistente;
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("{id}")
     public Estudiante getEstudianteUnico(Long estudianteId){
         Optional<Estudiante> estudianteOpcional = estudianteRepository.findById(estudianteId);
