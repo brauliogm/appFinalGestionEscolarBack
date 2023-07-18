@@ -1,5 +1,7 @@
 package com.bootcamp.estudiante;
 
+import com.bootcamp.libro.Libro;
+import com.bootcamp.libro.LibroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,10 +17,13 @@ import java.util.regex.Pattern;
 public class EstudianteService {
 
     private EstudianteRepository estudianteRepository;
+    private LibroRepository libroRepository;
 
     @Autowired
-    public EstudianteService(EstudianteRepository estudianteRepository) {
+    public EstudianteService(EstudianteRepository estudianteRepository,
+                             LibroRepository libroRepository) {
         this.estudianteRepository = estudianteRepository;
+        this.libroRepository = libroRepository;
     }
 
     @Transactional(readOnly = true)
@@ -120,5 +125,15 @@ public class EstudianteService {
         if (emailExiste) {
             throw new IllegalArgumentException("email " + estudiante.getEmail() + " ya esta registrado");
         }
+    }
+
+    public Estudiante agregarLibroAEstudiante(Long estudianteId, Libro libro) {
+        // Check si estudiante con ese id existe, si no, salta el error
+        Estudiante estudianteExistente = estudianteRepository.findById(estudianteId)
+                .orElseThrow(() -> new NoSuchElementException("Estudiante con ese id no existe, id: " + estudianteId));
+
+        libro.setEstudiante(estudianteExistente);
+        libroRepository.save(libro);
+        return estudianteExistente;
     }
 }

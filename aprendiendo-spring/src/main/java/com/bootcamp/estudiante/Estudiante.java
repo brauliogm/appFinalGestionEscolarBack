@@ -1,9 +1,13 @@
 package com.bootcamp.estudiante;
 
 import com.bootcamp.cuenta.CuentaBancaria;
+import com.bootcamp.libro.Libro;
+import com.bootcamp.materia.Materia;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -48,6 +52,25 @@ public class Estudiante {
     )
     private CuentaBancaria cuenta;
 
+    @OneToMany(mappedBy = "estudiante")
+    private List<Libro> libros;
+
+    @ManyToMany(
+            cascade = CascadeType.ALL
+    )
+    @JoinTable(
+            name = "inscripciones",
+            joinColumns = @JoinColumn(
+                    name = "estudiante_id",
+                    referencedColumnName = "id_estudiante"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "materia_id",
+                    referencedColumnName = "id_materia"
+            )
+    )
+    private List<Materia> materias = new ArrayList<>();
+
     public Estudiante() {
     }
 
@@ -60,6 +83,22 @@ public class Estudiante {
         this.segundoApellido = segundoApellido;
         this.fechaNacimiento = fechaNacimiento;
         this.email = email;
+    }
+
+    public List<Libro> getLibros() {
+        return libros;
+    }
+
+    public void setLibros(List<Libro> libros) {
+        this.libros = libros;
+    }
+
+    public CuentaBancaria getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(CuentaBancaria cuenta) {
+        this.cuenta = cuenta;
     }
 
     public Long getId() {

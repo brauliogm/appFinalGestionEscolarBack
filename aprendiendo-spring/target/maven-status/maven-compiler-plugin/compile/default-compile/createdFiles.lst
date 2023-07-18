@@ -1,1 +1,7 @@
+com\bootcamp\libro\LibroRepository.class
+com\bootcamp\cuenta\CuentaBancariaService.class
+com\bootcamp\cuenta\CuentaBancariaRepository.class
+com\bootcamp\cuenta\CuentaBancariaController.class
 com\bootcamp\cuenta\CuentaBancaria.class
+com\bootcamp\libro\Libro.class
+com\bootcamp\materia\Materia.class
