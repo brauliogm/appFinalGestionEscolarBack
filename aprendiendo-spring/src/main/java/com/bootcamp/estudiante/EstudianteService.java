@@ -2,6 +2,7 @@ package com.bootcamp.estudiante;
 
 import com.bootcamp.libro.Libro;
 import com.bootcamp.libro.LibroRepository;
+import com.bootcamp.materia.Materia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,10 +66,12 @@ public class EstudianteService {
                 .orElseThrow(() -> new NoSuchElementException("Estudiante con ese id no existe, id: " + estudianteId));
 
         //Actualizar Estudiante
-        estudianteExistente.setPrimerNombre(estudiante.getPrimerNombre());
-        estudianteExistente.setSegundoNombre(estudiante.getSegundoNombre());
-        estudianteExistente.setPrimerApellido(estudiante.getPrimerApellido());
-        estudianteExistente.setSegundoApellido(estudiante.getSegundoApellido());
+        Nombre nombre = new Nombre();
+        nombre.setPrimerNombre(estudiante.getNombre().getPrimerNombre());
+        nombre.setSegundoNombre(estudiante.getNombre().getSegundoNombre());
+        nombre.setPrimerApellido(estudiante.getNombre().getPrimerApellido());
+        nombre.setSegundoApellido(estudiante.getNombre().getSegundoApellido());
+        estudianteExistente.setNombre(nombre);
         estudianteExistente.setFechaNacimiento(estudiante.getFechaNacimiento());
 
         //check si el email en valido
@@ -134,6 +137,15 @@ public class EstudianteService {
 
         libro.setEstudiante(estudianteExistente);
         libroRepository.save(libro);
+        return estudianteExistente;
+    }
+
+    public Estudiante agregarMateriaAEstudiante(Long estudianteId, Materia materia) {
+        // Check si estudiante con ese id existe, si no, salta el error
+        Estudiante estudianteExistente = estudianteRepository.findById(estudianteId)
+                .orElseThrow(() -> new NoSuchElementException("Estudiante con ese id no existe, id: " + estudianteId));
+
+        estudianteExistente.addMateria(materia);
         return estudianteExistente;
     }
 }

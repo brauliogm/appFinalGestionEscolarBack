@@ -58,7 +58,7 @@ public class EstudianteRepositoryMentiras {
     public void actualizarEstudiante(Long estudianteId, Estudiante estudiante){
         for (Estudiante e : estudiantes) {
             if (e.getId().equals(estudianteId)){
-                e.setPrimerNombre(estudiante.getPrimerNombre());
+                e.getNombre().setPrimerNombre(estudiante.getNombre().getPrimerNombre());
             }
         }
     }
