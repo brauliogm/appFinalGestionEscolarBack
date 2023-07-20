@@ -19,22 +19,22 @@ public class MateriaController {
     }
 
     @GetMapping("/paged")
-    public Page<Materia> getEstudiantes(@PageableDefault(size = 3, page = 0) Pageable pageable){
-        return materiaService.findAllEstudiantes(pageable);
+    public Page<Materia> getMateria(@PageableDefault(size = 3, page = 0) Pageable pageable){
+        return materiaService.findAllMaterias(pageable);
     }
 
     @PostMapping
-    public void createMateria(@RequestBody Estudiante estudiante){
-        materiaService.createEstudiante(estudiante);
+    public void createMateria(@RequestBody Materia materia){
+        materiaService.createMateria(materia);
     }
 
     @DeleteMapping("{id}")
-    public void deleteMateria(@PathVariable("id") Long estudianteId){
-        materiaService.deleteEstudiante(estudianteId);
+    public void deleteMateria(@PathVariable("id") Long materiaId){
+        materiaService.deleteMateria(materiaId);
     }
 
     @PutMapping("{id}")
-    public Estudiante actualizarMateria(@PathVariable("id") Long estudianteId,@RequestBody Estudiante estudiante){
-        return materiaService.actualizarEstudiante(estudianteId, estudiante);
+    public Materia actualizarMateria(@PathVariable("id") Long materiaId,@RequestBody Materia materia){
+        return materiaService.actualizarMateria(materiaId, materia);
     }
 }
