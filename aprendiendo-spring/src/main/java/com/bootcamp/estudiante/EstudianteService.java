@@ -4,6 +4,8 @@ import com.bootcamp.libro.Libro;
 import com.bootcamp.libro.LibroRepository;
 import com.bootcamp.materia.Materia;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +33,11 @@ public class EstudianteService {
     public List<Estudiante> getAllEstudiantes(){
         List<Estudiante> estudiantes = estudianteRepository.findAll();
         return estudiantes;
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Estudiante> findAllEstudiantes(Pageable pageable){
+        return  estudianteRepository.findAll(pageable);
     }
 
     @Transactional(readOnly = true)
