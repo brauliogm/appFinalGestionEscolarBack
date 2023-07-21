@@ -18,14 +18,14 @@ public class MateriaController {
         this.materiaService = materiaService;
     }
 
-    @GetMapping("/paged")
+    @GetMapping
     public Page<Materia> getMateria(@PageableDefault(size = 3, page = 0) Pageable pageable){
         return materiaService.findAllMaterias(pageable);
     }
 
     @PostMapping
-    public void createMateria(@RequestBody Materia materia){
-        materiaService.createMateria(materia);
+    public Long createMateria(@RequestBody Materia materia){
+        return materiaService.createMateria(materia);
     }
 
     @DeleteMapping("{id}")

@@ -29,8 +29,15 @@ public class MateriaService {
     }
 
     //Agregar validacion para que no se repitan las materias
-    public void createMateria(Materia materia){
-        materiaRepository.save(materia);
+    public Long createMateria(Materia materia){
+        //check para saber si una materia ya existe
+        boolean nombreExiste = materiaRepository.existsByNombre(materia.getNombre());
+
+        if (nombreExiste){
+            throw new NoSuchElementException("La materia con el nombre de " + materia.getNombre() + " ya existe");
+        }
+
+        return  materiaRepository.save(materia).getId();
     }
 
     public void deleteMateria(Long materiaId){
@@ -46,9 +53,12 @@ public class MateriaService {
     }
 
     public Materia actualizarMateria(Long materiaId, Materia materia){
-        // Check si estudiante con ese id existe, si no, salta el error
+        // Check si materia con ese id existe, si no, salta el error
         Materia materiaExistente = materiaRepository.findById(materiaId)
                 .orElseThrow(() -> new NoSuchElementException("La materia con ese id no existe, id: " + materiaId));
+
+        //check para saber si el nombre que se quiere actualizar ya existe
+
 
         //Actualizar Estudiante
         materiaExistente.setNombre(materia.getNombre());
