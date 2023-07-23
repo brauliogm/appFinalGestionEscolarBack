@@ -57,8 +57,12 @@ public class MateriaService {
         Materia materiaExistente = materiaRepository.findById(materiaId)
                 .orElseThrow(() -> new NoSuchElementException("La materia con ese id no existe, id: " + materiaId));
 
-        //check para saber si el nombre que se quiere actualizar ya existe
+        //check para saber si el nombre de la materia que se quiere actualizar con este Id ya existe
+        boolean nombreExiste = materiaRepository.existsByNombreAndIdIsNot(materia.getNombre(), materiaId);
 
+        if (nombreExiste){
+            throw new NoSuchElementException("La materia con el nombre de " + materia.getNombre() + " y el Id: " + materiaId + " ya existe");
+        }
 
         //Actualizar Estudiante
         materiaExistente.setNombre(materia.getNombre());
