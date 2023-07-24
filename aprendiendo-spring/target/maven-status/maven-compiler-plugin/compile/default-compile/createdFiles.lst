@@ -1,9 +1,11 @@
 com\bootcamp\materia\MateriaController.class
+com\bootcamp\excepcion\ApiExceptionBody.class
 com\bootcamp\materia\MateriaRepository.class
 com\bootcamp\libro\LibroRepository.class
 com\bootcamp\cuenta\CuentaBancariaService.class
 com\bootcamp\cuenta\CuentaBancariaRepository.class
 com\bootcamp\cuenta\CuentaBancariaController.class
+com\bootcamp\excepcion\ExceptionController.class
 com\bootcamp\materia\MateriaService.class
 com\bootcamp\estudiante\Nombre.class
 com\bootcamp\cuenta\CuentaBancaria.class

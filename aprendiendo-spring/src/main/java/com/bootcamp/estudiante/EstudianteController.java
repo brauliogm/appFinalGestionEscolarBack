@@ -44,6 +44,11 @@ public class EstudianteController{
         return estudianteService.findAllEstudiantes(pageable);
     }
 
+    @GetMapping("{id}")
+    public Estudiante getEstudianteUnico(@PathVariable("id") Long estudianteId){
+        return estudianteService.getEstudianteUnico(estudianteId);
+    }
+
     @PostMapping
     public void createEstudiante(@RequestBody Estudiante estudiante){
         estudianteService.createEstudiante(estudiante);
@@ -57,11 +62,6 @@ public class EstudianteController{
     @PutMapping("{id}")
     public Estudiante actualizarEstudiante(@PathVariable("id") Long estudianteId,@RequestBody Estudiante estudiante){
         return estudianteService.actualizarEstudiante(estudianteId, estudiante);
-    }
-
-    @GetMapping("{id}")
-    public Estudiante getEstudianteUnico(@PathVariable("id") Long estudianteId){
-        return estudianteService.getEstudianteUnico(estudianteId);
     }
 
     @PostMapping("{estudianteId}/libros")
