@@ -46,7 +46,7 @@ public class EstudianteService {
         return estudiantes;
     }
 
-    public void createEstudiante(Estudiante estudiante){
+    public Long createEstudiante(Estudiante estudiante){
 
         emailValido(estudiante);
 
@@ -54,7 +54,7 @@ public class EstudianteService {
 
         estudianteRepository.save(estudiante);
 
-        //return estudiante.getId();
+        return estudiante.getId();
     }
 
     public void deleteEstudiante(Long estudianteId){

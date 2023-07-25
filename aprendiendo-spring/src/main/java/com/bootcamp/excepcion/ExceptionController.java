@@ -22,4 +22,10 @@ public class ExceptionController {
         ApiExceptionBody apiExceptionBody = new ApiExceptionBody(e.getMessage(), ZonedDateTime.now());
         return new ResponseEntity(apiExceptionBody, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(value = Exception.class)
+    public ResponseEntity<Object> handleGeneralException(Exception e) {
+        ApiExceptionBody apiExceptionBody = new ApiExceptionBody(e.getMessage(), ZonedDateTime.now());
+        return new ResponseEntity(apiExceptionBody, HttpStatus.INTERNAL_SERVER_ERROR); //Status 500
+    }
 }

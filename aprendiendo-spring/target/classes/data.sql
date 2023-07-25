@@ -19,3 +19,7 @@ insert into estudiante (id_cuenta, id_estudiante, primer_nombre, segundo_nombre,
 insert into estudiante (id_estudiante, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, fecha_nacimiento, email) values (8, 'Josefa', 'Maria', 'Moreno', 'Polin', '2001-08-15', 'maria@ehow.com');
 insert into estudiante (id_cuenta, id_estudiante, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, fecha_nacimiento, email) values (81, 9, 'Jose', 'Mario', 'Arango', 'Gutierrez', '2002-09-17', 'josemario@technorati.com');
 insert into estudiante (id_estudiante, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, fecha_nacimiento, email) values (10, 'Andres', 'Grillo', 'Rodriguez', 'Godber', '2003-10-19', 'grillo@ustream.tv');
+
+ALTER SEQUENCE sequence_estudiante RESTART WITH 10;
+
+SELECT nextval('sequence_estudiante')

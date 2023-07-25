@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,27 +52,32 @@ public class EstudianteController{
     }
 
     @PostMapping
-    public void createEstudiante(@RequestBody Estudiante estudiante){
-        estudianteService.createEstudiante(estudiante);
+    public ResponseEntity<Long> createEstudiante(@RequestBody Estudiante estudiante){
+        Long idEstudiante = estudianteService.createEstudiante(estudiante);
+        return new ResponseEntity<>(idEstudiante, HttpStatus.CREATED);
     }
 
     @DeleteMapping("{id}")
-    public void deleteEstudiante(@PathVariable("id") Long estudianteId){
+    public ResponseEntity<?> deleteEstudiante(@PathVariable("id") Long estudianteId){
         estudianteService.deleteEstudiante(estudianteId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("{id}")
-    public Estudiante actualizarEstudiante(@PathVariable("id") Long estudianteId,@RequestBody Estudiante estudiante){
-        return estudianteService.actualizarEstudiante(estudianteId, estudiante);
+    public ResponseEntity<Estudiante> actualizarEstudiante(@PathVariable("id") Long estudianteId,@RequestBody Estudiante estudiante){
+        Estudiante estudianteActualizado = estudianteService.actualizarEstudiante(estudianteId, estudiante);
+        return new ResponseEntity<>(estudianteActualizado, HttpStatus.ACCEPTED);
     }
 
     @PostMapping("{estudianteId}/libros")
-    public Estudiante agregarLibroAEstudiante(@PathVariable Long estudianteId, @RequestBody Libro libro){
-        return estudianteService.agregarLibroAEstudiante(estudianteId, libro);
+    public ResponseEntity<Estudiante> agregarLibroAEstudiante(@PathVariable Long estudianteId, @RequestBody Libro libro){
+        Estudiante nuevoLibroConEstudiante = estudianteService.agregarLibroAEstudiante(estudianteId, libro);
+        return new ResponseEntity<>(nuevoLibroConEstudiante, HttpStatus.CREATED);
     }
 
     @PostMapping("{estudianteId}/materias")
-    public Estudiante agregarMateriaAEstudiante(@PathVariable Long estudianteId, @RequestBody Materia materia){
-        return estudianteService.agregarMateriaAEstudiante(estudianteId, materia);
+    public ResponseEntity<Estudiante> agregarMateriaAEstudiante(@PathVariable Long estudianteId, @RequestBody Materia materia){
+        Estudiante nuevaMateriaParaEstudiante = estudianteService.agregarMateriaAEstudiante(estudianteId, materia);
+        return new ResponseEntity<>(nuevaMateriaParaEstudiante, HttpStatus.CREATED);
     }
 }
