@@ -3,6 +3,8 @@ package com.bootcamp.estudiante;
 import com.bootcamp.libro.Libro;
 import com.bootcamp.libro.LibroRepository;
 import com.bootcamp.materia.Materia;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +21,7 @@ import java.util.regex.Pattern;
 @Service
 public class EstudianteService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(EstudianteService.class);
     private EstudianteRepository estudianteRepository;
     private LibroRepository libroRepository;
 
@@ -47,14 +50,17 @@ public class EstudianteService {
     }
 
     public Long createEstudiante(Estudiante estudiante){
+        LOGGER.info("creando estudiante {} ", estudiante);
 
+        //check si el email es valido
         emailValido(estudiante);
 
+        //check para ver si el email existe
         nuevoEmailRegistrado(estudiante);
 
-        estudianteRepository.save(estudiante);
-
-        return estudiante.getId();
+        Long id = estudianteRepository.save(estudiante).getId();
+        LOGGER.info("Estudiante con id {} fue guardado exitosamente", id);
+        return id;
     }
 
     public void deleteEstudiante(Long estudianteId){
@@ -135,6 +141,7 @@ public class EstudianteService {
     private void nuevoEmailRegistrado(Estudiante estudiante) {
         boolean emailExiste = estudianteRepository.existsByEmail(estudiante.getEmail());
         if (emailExiste) {
+            LOGGER.warn("Email {} ya esta registrado", estudiante.getEmail());
             throw new IllegalArgumentException("email " + estudiante.getEmail() + " ya esta registrado");
         }
     }

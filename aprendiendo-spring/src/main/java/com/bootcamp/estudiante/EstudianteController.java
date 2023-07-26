@@ -2,6 +2,8 @@ package com.bootcamp.estudiante;
 
 import com.bootcamp.libro.Libro;
 import com.bootcamp.materia.Materia;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +21,8 @@ import java.util.Optional;
 public class EstudianteController{
 
     private EstudianteService estudianteService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(EstudianteController.class);
+
 
     @Autowired
     public EstudianteController(EstudianteService estudianteService) {
