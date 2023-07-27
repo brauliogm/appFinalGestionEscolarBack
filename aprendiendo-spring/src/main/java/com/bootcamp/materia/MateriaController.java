@@ -1,6 +1,7 @@
 package com.bootcamp.materia;
 
 import com.bootcamp.estudiante.Estudiante;
+import com.bootcamp.libro.Libro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,11 @@ public class MateriaController {
     @GetMapping
     public Page<Materia> getMateria(@PageableDefault(size = 3, page = 0) Pageable pageable){
         return materiaService.findAllMaterias(pageable);
+    }
+
+    @GetMapping("{id}")
+    public Materia getMateriaUnica(@PathVariable("id") Long materiaId){
+        return materiaService.getMateriaUnica(materiaId);
     }
 
     @PostMapping

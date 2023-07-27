@@ -34,17 +34,20 @@ public class EstudianteService {
 
     @Transactional(readOnly = true)
     public List<Estudiante> getAllEstudiantes(){
+        LOGGER.info("buscando lista de estudiantes");
         List<Estudiante> estudiantes = estudianteRepository.findAll();
         return estudiantes;
     }
 
     @Transactional(readOnly = true)
     public Page<Estudiante> findAllEstudiantes(Pageable pageable){
+        LOGGER.info("buscando lista de estudiantes");
         return  estudianteRepository.findAll(pageable);
     }
 
     @Transactional(readOnly = true)
     public List<Estudiante> getEstudiantesByPrimerNombreOrPrimerApellido(String primerNombre, String primerApellido){
+        LOGGER.info("Buscando estudiante unico");
         List<Estudiante> estudiantes = estudianteRepository.findEstudianteByPrimerNombreOrPrimerApellido(primerNombre, primerApellido);
         return estudiantes;
     }
@@ -72,6 +75,7 @@ public class EstudianteService {
             throw new NoSuchElementException("WARNING: el estudiante con el Id " + estudianteId + " no existe");
         }
 
+        LOGGER.info("estudiante con id: {} borrado", estudianteId);
         estudianteRepository.deleteById(estudianteId);
     }
 
@@ -79,6 +83,7 @@ public class EstudianteService {
         // Check si estudiante con ese id existe, si no, salta el error
         Estudiante estudianteExistente = estudianteRepository.findById(estudianteId)
                 .orElseThrow(() -> new NoSuchElementException("Estudiante con ese id no existe, id: " + estudianteId));
+        LOGGER.info("estudiante con id: {} encontrado para actualizarlo", estudianteId);
 
         //Actualizar Estudiante
         Nombre nombre = new Nombre();
@@ -98,6 +103,7 @@ public class EstudianteService {
 
         //Actualizar email de estudiante
         estudianteExistente.setEmail(estudiante.getEmail());
+        LOGGER.info("estudiante con id: {} actualizado", estudianteId);
 
         return estudianteExistente;
     }
@@ -110,7 +116,7 @@ public class EstudianteService {
         if (estudianteOpcional.isEmpty()){
             throw new NoSuchElementException("No existe ningun estudiante con el id: " + estudianteId);
         }
-
+        LOGGER.info("estudiante con id: {} encontrado con getEstudianteUnico", estudianteId);
         return estudianteOpcional.get();
 
 //        return  estudianteRepository.findById(estudianteId)
@@ -151,6 +157,7 @@ public class EstudianteService {
         Estudiante estudianteExistente = estudianteRepository.findById(estudianteId)
                 .orElseThrow(() -> new NoSuchElementException("Estudiante con ese id no existe, id: " + estudianteId));
 
+        LOGGER.info("estudiante con id: {} se le agrego un libro", estudianteId);
         libro.setEstudiante(estudianteExistente);
         libroRepository.save(libro);
         return estudianteExistente;
@@ -161,6 +168,7 @@ public class EstudianteService {
         Estudiante estudianteExistente = estudianteRepository.findById(estudianteId)
                 .orElseThrow(() -> new NoSuchElementException("Estudiante con ese id no existe, id: " + estudianteId));
 
+        LOGGER.info("estudiante con id: {} se le agrego una materia", estudianteId);
         estudianteExistente.addMateria(materia);
         return estudianteExistente;
     }

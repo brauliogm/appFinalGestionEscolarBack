@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 // @Deprecated //Con esta anotacion ya no se hace uso de esta version, se hace obsoleta
 @RestController

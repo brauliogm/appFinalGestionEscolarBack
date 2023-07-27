@@ -21,8 +21,10 @@ public class Libro {
     )
     private Long id;
 
+    @Column(name = "titulo")
     private String titulo;
 
+    @Column(name = "autor")
     private String autor;
 
     @JsonIgnore

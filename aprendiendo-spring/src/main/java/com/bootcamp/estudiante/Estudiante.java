@@ -32,7 +32,7 @@ public class Estudiante {
     @Column(name = "fecha_nacimiento")
     private LocalDate fechaNacimiento;
 
-    @Column(name = "email",  nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @OneToOne(cascade = CascadeType.ALL)

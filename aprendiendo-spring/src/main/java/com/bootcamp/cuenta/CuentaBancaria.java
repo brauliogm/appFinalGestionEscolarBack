@@ -22,7 +22,7 @@ public class CuentaBancaria {
     )
     private Long id;
 
-    @Column(name = "numero_cuenta")
+    @Column(name = "numero_cuenta", nullable = false, unique = true)
     private Long numeroCuenta;
 
     @Column(name = "banco")
