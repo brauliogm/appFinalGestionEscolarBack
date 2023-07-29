@@ -1,0 +1,9 @@
+.\mvnw wrapper:wrapper
+ en la consola se coloca este comando y configura maven de nuevo para poder enpaquetar desde la consola,
+esto despues de tener los archivos de maven-wrapper.jar y .properties
+
+se usa el comando de:
+
+.\mvnw clean install
+
+desde la consola para poder crear el .jar de la aplicacion
