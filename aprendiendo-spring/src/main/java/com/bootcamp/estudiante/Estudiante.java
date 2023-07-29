@@ -96,11 +96,13 @@ public class Estudiante {
     public void addLibro(Libro libro) {
         if (!libros.contains(libro)){
             libros.add(libro);
+            libro.setEstudiante(this);
         }
     }
 
-    public void removeLibro(Libro libro){
+    public void removeLibro(Libro libro) {
         libros.remove(libro);
+        libro.setEstudiante(null);
     }
 
     public CuentaBancaria getCuenta() {

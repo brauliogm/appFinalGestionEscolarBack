@@ -1,8 +1,11 @@
 package com.bootcamp.estudiante;
 
+import com.bootcamp.cuenta.CuentaBancaria;
+import com.bootcamp.cuenta.CuentaBancariaRepository;
 import com.bootcamp.libro.Libro;
 import com.bootcamp.libro.LibroRepository;
 import com.bootcamp.materia.Materia;
+import com.bootcamp.materia.MateriaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +27,18 @@ public class EstudianteService {
     private static final Logger LOGGER = LoggerFactory.getLogger(EstudianteService.class);
     private EstudianteRepository estudianteRepository;
     private LibroRepository libroRepository;
+    private final MateriaRepository materiaRepository;
+    private final CuentaBancariaRepository cuentaBancariaRepository;
 
     @Autowired
     public EstudianteService(EstudianteRepository estudianteRepository,
-                             LibroRepository libroRepository) {
+                             LibroRepository libroRepository,
+                             MateriaRepository materiaRepository,
+                             CuentaBancariaRepository cuentaBancariaRepository) {
         this.estudianteRepository = estudianteRepository;
         this.libroRepository = libroRepository;
+        this.materiaRepository = materiaRepository;
+        this.cuentaBancariaRepository = cuentaBancariaRepository;
     }
 
     @Transactional(readOnly = true)
@@ -152,24 +161,46 @@ public class EstudianteService {
         }
     }
 
-    public Estudiante agregarLibroAEstudiante(Long estudianteId, Libro libro) {
+    public Estudiante darLibroAEstudiante(Long estudianteId, Long libroId){
         // Check si estudiante con ese id existe, si no, salta el error
         Estudiante estudianteExistente = estudianteRepository.findById(estudianteId)
                 .orElseThrow(() -> new NoSuchElementException("Estudiante con ese id no existe, id: " + estudianteId));
 
-        LOGGER.info("estudiante con id: {} se le agrego un libro", estudianteId);
-        libro.setEstudiante(estudianteExistente);
-        libroRepository.save(libro);
+        Libro libroExistente = libroRepository.findById(libroId)
+                .orElseThrow(() -> new NoSuchElementException("Libro con ese id no existe, id: " + estudianteId));
+
+        //Agregar libro a estudiante
+        libroExistente.setEstudiante(estudianteExistente);
+//        estudianteExistente.addLibro(libroExistente);
+
         return estudianteExistente;
     }
 
-    public Estudiante agregarMateriaAEstudiante(Long estudianteId, Materia materia) {
+    public Estudiante darMateriaAEstudiante(Long estudianteId, Long materiaId){
         // Check si estudiante con ese id existe, si no, salta el error
         Estudiante estudianteExistente = estudianteRepository.findById(estudianteId)
                 .orElseThrow(() -> new NoSuchElementException("Estudiante con ese id no existe, id: " + estudianteId));
 
-        LOGGER.info("estudiante con id: {} se le agrego una materia", estudianteId);
-        estudianteExistente.addMateria(materia);
+        Materia materiaExistente = materiaRepository.findById(materiaId)
+                .orElseThrow(() -> new NoSuchElementException("Libro con ese id no existe, id: " + estudianteId));
+
+        //Agregar libro a estudiante
+        estudianteExistente.addMateria(materiaExistente);
+
+        return estudianteExistente;
+    }
+
+    public Estudiante darCuentaAEstudiante(Long estudianteId, Long cuentaId){
+        // Check si estudiante con ese id existe, si no, salta el error
+        Estudiante estudianteExistente = estudianteRepository.findById(estudianteId)
+                .orElseThrow(() -> new NoSuchElementException("Estudiante con ese id no existe, id: " + estudianteId));
+
+        CuentaBancaria cuentaExistente = cuentaBancariaRepository.findById(cuentaId)
+                .orElseThrow(() -> new NoSuchElementException("Libro con ese id no existe, id: " + estudianteId));
+
+        //Agregar libro a estudiante
+        estudianteExistente.setCuenta(cuentaExistente);
+
         return estudianteExistente;
     }
 }

@@ -1,5 +1,6 @@
 package com.bootcamp.estudiante;
 
+import com.bootcamp.cuenta.CuentaBancaria;
 import com.bootcamp.libro.Libro;
 import com.bootcamp.materia.Materia;
 import org.slf4j.Logger;
@@ -72,15 +73,24 @@ public class EstudianteController{
         return new ResponseEntity<>(estudianteActualizado, HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("{estudianteId}/libros")
-    public ResponseEntity<Estudiante> agregarLibroAEstudiante(@PathVariable Long estudianteId, @RequestBody Libro libro){
-        Estudiante nuevoLibroConEstudiante = estudianteService.agregarLibroAEstudiante(estudianteId, libro);
-        return new ResponseEntity<>(nuevoLibroConEstudiante, HttpStatus.CREATED);
+
+    @PutMapping("{estudianteId}/libros/{libroId}")
+    public ResponseEntity<Estudiante> darLibroAEstudiante(@PathVariable("estudianteId") Long estudianteId, @PathVariable("libroId") Long libroId){
+        Estudiante estudianteConNuevoLibro = estudianteService.darLibroAEstudiante(estudianteId, libroId);
+        return new ResponseEntity<>(estudianteConNuevoLibro, HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("{estudianteId}/materias")
-    public ResponseEntity<Estudiante> agregarMateriaAEstudiante(@PathVariable Long estudianteId, @RequestBody Materia materia){
-        Estudiante nuevaMateriaParaEstudiante = estudianteService.agregarMateriaAEstudiante(estudianteId, materia);
-        return new ResponseEntity<>(nuevaMateriaParaEstudiante, HttpStatus.CREATED);
+    @PutMapping("{estudianteId}/materias/{materiaId}")
+    public ResponseEntity<Estudiante> darMateriaAEstudiante(@PathVariable("estudianteId") Long estudianteId, @PathVariable("materiaId") Long materiaId){
+        Estudiante estudianteConNuevaMateria = estudianteService.darMateriaAEstudiante(estudianteId, materiaId);
+        return new ResponseEntity<>(estudianteConNuevaMateria, HttpStatus.ACCEPTED);
     }
+
+    @PutMapping("{estudianteId}/cuentas/{cuentaId}")
+    public ResponseEntity<Estudiante> darCuentaAEstudiante(@PathVariable("estudianteId") Long estudianteId, @PathVariable("cuentaId") Long cuentaId){
+        Estudiante estudianteConNuevaCuenta = estudianteService.darCuentaAEstudiante(estudianteId, cuentaId);
+        return new ResponseEntity<>(estudianteConNuevaCuenta, HttpStatus.ACCEPTED);
+    }
+
+
 }
