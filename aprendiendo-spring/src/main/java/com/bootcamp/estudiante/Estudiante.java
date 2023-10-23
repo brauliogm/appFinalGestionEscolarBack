@@ -3,6 +3,7 @@ package com.bootcamp.estudiante;
 import com.bootcamp.cuenta.CuentaBancaria;
 import com.bootcamp.libro.Libro;
 import com.bootcamp.materia.Materia;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -43,6 +44,7 @@ public class Estudiante {
     )
     private CuentaBancaria cuenta;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "estudiante")
     private List<Libro> libros = new ArrayList<>();
 

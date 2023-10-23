@@ -27,7 +27,7 @@ public class Libro {
     @Column(name = "autor")
     private String autor;
 
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToOne
     @JoinColumn(
             name = "estudiante_id",
