@@ -11,8 +11,9 @@ import java.util.Collection;
 @RequestMapping("api/v1/login")
 public class LoginController {
 
-    @PreAuthorize(("hasAnyRoler('COOR', 'BIBL', 'ADMIN')"))
-    @GetMapping("")
+
+    @GetMapping
+    @PreAuthorize("hasAnyRole('BIBL', 'COOR', 'ADMIN')")
     public Collection<? extends GrantedAuthority> login(Authentication auth){
         return  auth.getAuthorities();
     }

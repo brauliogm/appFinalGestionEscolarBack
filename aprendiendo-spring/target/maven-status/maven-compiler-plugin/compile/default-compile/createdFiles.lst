@@ -8,6 +8,7 @@ com\bootcamp\estudiante\Estudiante.class
 com\bootcamp\estudiante\EstudianteService.class
 com\bootcamp\cuenta\CuentaBancariaRepository.class
 com\bootcamp\libro\LibroService.class
+com\bootcamp\login\Login.class
 com\bootcamp\estudiante\EstudianteRepository.class
 com\bootcamp\estudiante\EstudianteController.class
 com\bootcamp\estudiante\EstudianteControllerV2.class
@@ -21,4 +22,5 @@ com\bootcamp\cuenta\CuentaBancariaService.class
 com\bootcamp\cuenta\CuentaBancariaController.class
 com\bootcamp\excepcion\ExceptionController.class
 com\bootcamp\materia\MateriaService.class
+com\bootcamp\login\LoginController.class
 com\bootcamp\cuenta\CuentaBancaria.class
