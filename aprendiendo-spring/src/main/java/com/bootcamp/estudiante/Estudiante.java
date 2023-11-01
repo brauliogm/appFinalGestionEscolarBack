@@ -36,6 +36,7 @@ public class Estudiante {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(
             name = "id_cuenta",
